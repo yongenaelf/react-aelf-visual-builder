@@ -7,5 +7,6 @@ export default defineConfig({
   ],
   build: {
     outDir: "app",
-  }
+  },
+  base: "/react-aelf-visual-builder/"
 });
