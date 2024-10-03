@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepublishOnly": "npm run build",
-    "semantic-release": "semantic-release"
+    "build:app": "vite build --config vite-app.config.js"
   },
   "dependencies": {
     "@codemirror/language": "^6.10.3",
