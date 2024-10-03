@@ -76,7 +76,7 @@ const DnDFlow = ({colorMode}: Props) => {
 
       setNodes(nodes.concat(newNode));
     },
-    [screenToFlowPosition, type],
+    [screenToFlowPosition, type, nodes],
   );
 
   return (
