@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepublishOnly": "npm run build",
-    "build:app": "vite build --config vite-app.config.js"
+    "build:app": "tsc -b ./tsconfig.lib.json && vite build --config vite-app.config.js"
   },
   "dependencies": {
     "@codemirror/language": "^6.10.3",
