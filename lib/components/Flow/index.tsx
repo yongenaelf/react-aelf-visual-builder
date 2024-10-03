@@ -2,45 +2,48 @@ import React, { useRef, useCallback } from 'react';
 import {
   ReactFlow,
   ReactFlowProvider,
-  addEdge,
-  useNodesState,
-  useEdgesState,
   Controls,
   useReactFlow,
-  OnConnect,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { useShallow } from 'zustand/react/shallow';
+import { AppState } from './types';
 
 import { DnDProvider, useDnD, Sidebar } from '../../main';
 
 import './index.css';
+import ViewFunctionNode from '../ViewFunctionNode';
+import SendFunctionNode from '../SendFunctionNode';
+import useStore from './store';
+
+const selector = (state: AppState) => ({
+  nodes: state.nodes,
+  edges: state.edges,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  onConnect: state.onConnect,
+  setNodes: state.setNodes,
+});
 
 interface Props {
   colorMode?: 'light' | 'dark';
 }
 
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },
-];
+const nodeTypes = {
+  ViewFunctionNode,
+  SendFunctionNode
+};
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = ({colorMode}: Props) => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { screenToFlowPosition } = useReactFlow();
   const [type] = useDnD();
 
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [],
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setNodes } = useStore(
+    useShallow(selector),
   );
 
   const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
@@ -71,7 +74,7 @@ const DnDFlow = ({colorMode}: Props) => {
         data: { label: `${type} node` },
       };
 
-      setNodes((nds) => nds.concat(newNode));
+      setNodes(nodes.concat(newNode));
     },
     [screenToFlowPosition, type],
   );
@@ -87,6 +90,7 @@ const DnDFlow = ({colorMode}: Props) => {
           onConnect={onConnect}
           onDrop={onDrop}
           onDragOver={onDragOver}
+          nodeTypes={nodeTypes}
           fitView
           colorMode={colorMode}
         >

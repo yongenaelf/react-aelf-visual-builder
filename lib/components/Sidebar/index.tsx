@@ -24,6 +24,12 @@ export const Sidebar = () => {
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Output Node
       </div>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'ViewFunctionNode')} draggable>
+        View Function Node
+      </div>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'SendFunctionNode')} draggable>
+        Send Function Node
+      </div>
     </aside>
   );
 };
