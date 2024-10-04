@@ -34,7 +34,7 @@ export function Protobuf({height}: {height?: string}) {
 
     const sendMethods = nodes.filter(node => node.type === 'SendFunctionNode').map(node => ({
         name: String(node.data.text || node.id),
-        inputType: "google.protobuf.StringValue",
+        inputType: String(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)?.data.text || "google.protobuf.StringValue"),
         outputType: "google.protobuf.Empty"
     }));
 
