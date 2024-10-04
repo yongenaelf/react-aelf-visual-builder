@@ -47,6 +47,13 @@ export function Protobuf({height}: {height?: string}) {
         }
     }));
 
+    const states = nodes.filter(node => node.type === 'StateNode').map(node => ({
+        name: String(node.data.text || node.id),
+        fields: [
+            { name: "value", type: "string", id: 1 }
+        ],
+    }));
+
     const ast: ProtoFile = {
       syntax: "proto3",
       package: "",  // No package for this file
@@ -58,7 +65,8 @@ export function Protobuf({height}: {height?: string}) {
       ],
     
       messages: [
-          ...events
+          ...events,
+          ...states
       ],
     
       services: [

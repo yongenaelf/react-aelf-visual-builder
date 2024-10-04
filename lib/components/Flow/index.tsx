@@ -16,6 +16,7 @@ import ViewFunctionNode from '../ViewFunctionNode';
 import SendFunctionNode from '../SendFunctionNode';
 import useStore from '../Store';
 import EventNode from '../EventNode';
+import StateNode from '../StateNode';
 
 const selector = (state: AppState) => ({
   nodes: state.nodes,
@@ -34,6 +35,7 @@ const nodeTypes = {
   ViewFunctionNode,
   SendFunctionNode,
   EventNode,
+  StateNode
 };
 
 let id = 0;
