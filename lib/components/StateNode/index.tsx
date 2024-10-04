@@ -25,6 +25,7 @@ function StateNode({
           style={{ display: "block" }}
         />
       </div>
+      <Handle type="source" position={Position.Left} />
       <Handle type="target" position={Position.Right} />
     </div>
   );

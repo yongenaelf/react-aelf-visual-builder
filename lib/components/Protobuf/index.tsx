@@ -26,7 +26,7 @@ export function Protobuf({height}: {height?: string}) {
     const viewMethods = nodes.filter(node => node.type === 'ViewFunctionNode').map(node => ({
         name: String(node.data.text || node.id),
         inputType: "google.protobuf.Empty",
-        outputType: "google.protobuf.StringValue",
+        outputType: String(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)?.data.text || "google.protobuf.StringValue"),
         options: [
             { key: "aelf.is_view", value: "true" }
         ]
@@ -93,7 +93,7 @@ export function Protobuf({height}: {height?: string}) {
 
 
     return generateProtoFile(ast);
-  }, [nodes, projectName])
+  }, [nodes, projectName, edges])
   
   return <CodeMirror value={value} height={height || "200px"} extensions={[StreamLanguage.define(protobuf)]} readOnly />
 }

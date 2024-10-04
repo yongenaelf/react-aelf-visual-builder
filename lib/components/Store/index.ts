@@ -24,10 +24,10 @@ const useStore = create<AppState>((set, get) => ({
     });
   },
   setNodes: (nodes) => {
-    set({ nodes });
+    set({ nodes: [...nodes] });
   },
   setEdges: (edges) => {
-    set({ edges });
+    set({ edges: [...edges] });
   },
   setProjectName: (projectName) => {
     set({ projectName });
