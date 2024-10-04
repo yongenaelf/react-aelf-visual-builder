@@ -7,14 +7,14 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useShallow } from 'zustand/react/shallow';
-import { AppState } from './types';
+import { AppState } from '../Store/types';
 
 import { DnDProvider, useDnD, Sidebar } from '../../main';
 
 import './index.css';
 import ViewFunctionNode from '../ViewFunctionNode';
 import SendFunctionNode from '../SendFunctionNode';
-import useStore from './store';
+import useStore from '../Store';
 import EventNode from '../EventNode';
 
 const selector = (state: AppState) => ({

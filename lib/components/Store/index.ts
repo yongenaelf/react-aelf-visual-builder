@@ -7,6 +7,7 @@ import { AppState } from './types';
 const useStore = create<AppState>((set, get) => ({
   nodes: [],
   edges: [],
+  projectName: 'HelloWorld',
   onNodesChange: (changes) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes),
@@ -28,6 +29,9 @@ const useStore = create<AppState>((set, get) => ({
   setEdges: (edges) => {
     set({ edges });
   },
+  setProjectName: (projectName) => {
+    set({ projectName });
+  }
 }));
 
 export default useStore;

@@ -1,4 +1,5 @@
 import { useDnD } from '../DnDContext';
+import { ProjectName } from '../ProjectName';
 
 export const Sidebar = () => {
   const [_, setType] = useDnD();
@@ -14,6 +15,7 @@ export const Sidebar = () => {
 
   return (
     <aside>
+      <ProjectName />
       <div className="description">You can drag these nodes to the pane on the left.</div>
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'ViewFunctionNode')} draggable>
         View Function Node
