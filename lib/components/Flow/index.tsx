@@ -15,6 +15,7 @@ import './index.css';
 import ViewFunctionNode from '../ViewFunctionNode';
 import SendFunctionNode from '../SendFunctionNode';
 import useStore from './store';
+import EventNode from '../EventNode';
 
 const selector = (state: AppState) => ({
   nodes: state.nodes,
@@ -31,7 +32,8 @@ interface Props {
 
 const nodeTypes = {
   ViewFunctionNode,
-  SendFunctionNode
+  SendFunctionNode,
+  EventNode,
 };
 
 let id = 0;

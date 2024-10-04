@@ -33,6 +33,16 @@ export function Protobuf({height}: {height?: string}) {
         outputType: "google.protobuf.Empty"
     }));
 
+    const events = nodes.filter(node => node.type === 'EventNode').map(node => ({
+        name: String(node.data.text || node.id),
+        fields: [
+            { name: "value", type: "string", id: 1 }
+        ],
+        options: {
+            "aelf.is_event": "true",
+        }
+    }));
+
     const ast: ProtoFile = {
       syntax: "proto3",
       package: "",  // No package for this file
@@ -44,15 +54,7 @@ export function Protobuf({height}: {height?: string}) {
       ],
     
       messages: [
-          {
-              name: "UpdatedMessage",
-              fields: [
-                  { name: "value", type: "string", id: 1 }
-              ],
-              options: {
-                  "aelf.is_event": "true",
-              }
-          }
+          ...events
       ],
     
       services: [

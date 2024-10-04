@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Position, NodeProps, Handle, useReactFlow, Node } from "@xyflow/react";
 
-function SendFunctionNode({
+function EventNode({
   id,
   data,
 }: NodeProps<Node<{ text: string; label?: string }>>) {
@@ -17,7 +17,7 @@ function SendFunctionNode({
         borderRadius: 10,
       }}
     >
-      <div>Send Function</div>
+      <div>Event</div>
       <div style={{ marginTop: 5 }}>
         <input
           onChange={(evt) => updateNodeData(id, { text: evt.target.value })}
@@ -25,9 +25,9 @@ function SendFunctionNode({
           style={{ display: "block" }}
         />
       </div>
-      <Handle type="target" position={Position.Left} />
+      <Handle type="target" position={Position.Right} />
     </div>
   );
 }
 
-export default memo(SendFunctionNode);
+export default memo(EventNode);
