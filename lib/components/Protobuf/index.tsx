@@ -2,7 +2,7 @@ import { generateProtoFile, ProtoFile } from '@yongenaelf/protobuf-generator-ts'
 import CodeMirror from '@uiw/react-codemirror';
 import { protobuf } from "@codemirror/legacy-modes/mode/protobuf";
 import { StreamLanguage } from "@codemirror/language";
-import { AppState } from '../Store/types';
+import { AppState, AppNode } from '../Store/types';
 import { useShallow } from 'zustand/react/shallow';
 import useStore from '../Store';
 import { useMemo } from 'react';
@@ -13,6 +13,25 @@ const selector = (state: AppState) => ({
   edges: state.edges,
   projectName: state.projectName,
 });
+
+function getProtobufType(node?: AppNode) {
+    if (!node) return "google.protobuf.Empty";
+
+    switch(node.type) {
+        case "StateNode": return String(node.data.text || node.id);
+        case "StateTypeNode": return getProtobufDefaultType(node.data.type as string);
+        default: return "google.protobuf.Empty";
+    }
+}
+
+function getProtobufDefaultType(type: string) {
+    switch(type) {
+        case "string": return "google.protobuf.StringValue";
+        case "int64": return "google.protobuf.Int64Value";
+        case "boolean": return "google.protobuf.BoolValue";
+        default: return "google.protobuf.Empty";
+    }
+}
 
 export function Protobuf({height}: {height?: string}) {
   const { nodes, edges, projectName } = useStore(
@@ -26,7 +45,7 @@ export function Protobuf({height}: {height?: string}) {
     const viewMethods = nodes.filter(node => node.type === 'ViewFunctionNode').map(node => ({
         name: String(node.data.text || node.id),
         inputType: "google.protobuf.Empty",
-        outputType: String(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)?.data.text || "google.protobuf.StringValue"),
+        outputType: getProtobufType(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)),
         options: [
             { key: "aelf.is_view", value: "true" }
         ]
@@ -34,7 +53,7 @@ export function Protobuf({height}: {height?: string}) {
 
     const sendMethods = nodes.filter(node => node.type === 'SendFunctionNode').map(node => ({
         name: String(node.data.text || node.id),
-        inputType: String(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)?.data.text || "google.protobuf.StringValue"),
+        inputType: getProtobufType(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)),
         outputType: "google.protobuf.Empty"
     }));
 
