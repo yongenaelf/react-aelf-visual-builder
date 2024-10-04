@@ -10,11 +10,12 @@ import camelCase from 'camelcase';
 
 const selector = (state: AppState) => ({
   nodes: state.nodes,
+  edges: state.edges,
   projectName: state.projectName,
 });
 
 export function Protobuf({height}: {height?: string}) {
-  const { nodes, projectName } = useStore(
+  const { nodes, edges, projectName } = useStore(
     useShallow(selector),
   );
 
@@ -49,9 +50,11 @@ export function Protobuf({height}: {height?: string}) {
 
     const states = nodes.filter(node => node.type === 'StateNode').map(node => ({
         name: String(node.data.text || node.id),
-        fields: [
-            { name: "value", type: "string", id: 1 }
-        ],
+        fields: edges.filter(edge => edge.target === node.id).map(edge => nodes.find(node => node.id === edge.source)).map((node, id) => ({
+            name: String(node?.data.text || node?.id),
+            type: String(node?.data.type).toLowerCase(),
+            id: id + 1
+        })),
     }));
 
     const ast: ProtoFile = {

@@ -29,6 +29,9 @@ export const Sidebar = () => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'StateNode')} draggable>
         State Node
       </div>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'StateTypeNode')} draggable>
+        State Type Node
+      </div>
     </aside>
   );
 };
