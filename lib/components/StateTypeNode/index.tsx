@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { Position, NodeProps, Handle, useReactFlow, Node } from "@xyflow/react";
 
 function StateTypeNode({
@@ -6,6 +6,12 @@ function StateTypeNode({
   data,
 }: NodeProps<Node<{ text: string; type: string; }>>) {
   const { updateNodeData } = useReactFlow();
+
+  useEffect(() => {
+    if (!data.type) {
+      updateNodeData(id, { type: "string" });
+    }
+  }, [data.type])
 
   return (
     <div
