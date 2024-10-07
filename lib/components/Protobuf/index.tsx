@@ -70,7 +70,7 @@ export function Protobuf({height}: {height?: string}) {
         name: String(node.data.type || node.id),
         fields: edges.filter(edge => edge.target === node.id).map(edge => nodes.find(node => node.id === edge.source)).map((node, id) => ({
             name: String(node?.data.text || node?.id),
-            type: String(node?.data.type).toLowerCase(),
+            type: String(node?.data.type),
             id: id + 1
         })),
     }));
