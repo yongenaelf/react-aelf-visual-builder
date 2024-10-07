@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { Position, NodeProps, Handle, useReactFlow, Node } from "@xyflow/react";
 
-function StateNode({
+function StateObjectNode({
   id,
   data,
-}: NodeProps<Node<{ text: string; label?: string }>>) {
+}: NodeProps<Node<{ text?: string; type: string; }>>) {
   const { updateNodeData } = useReactFlow();
 
   return (
@@ -17,11 +17,20 @@ function StateNode({
         borderRadius: 10,
       }}
     >
-      <div>State</div>
+      <div>State Object</div>
+      <div style={{ marginTop: 5 }}>
+        <input
+          onChange={(evt) => updateNodeData(id, { type: evt.target.value })}
+          value={data.type}
+          placeholder="Type Name"
+          style={{ display: "block" }}
+        />
+      </div>
       <div style={{ marginTop: 5 }}>
         <input
           onChange={(evt) => updateNodeData(id, { text: evt.target.value })}
           value={data.text}
+          placeholder="Name"
           style={{ display: "block" }}
         />
       </div>
@@ -31,4 +40,4 @@ function StateNode({
   );
 }
 
-export default memo(StateNode);
+export default memo(StateObjectNode);

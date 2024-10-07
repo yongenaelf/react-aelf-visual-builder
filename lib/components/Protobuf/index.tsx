@@ -18,8 +18,7 @@ function getProtobufType(node?: AppNode) {
     if (!node) return "google.protobuf.Empty";
 
     switch(node.type) {
-        case "StateNode": return String(node.data.text || node.id);
-        case "StateTypeNode": return getProtobufDefaultType(node.data.type as string);
+        case "StateTypeNode": return node.data.type === 'object' ? (node.data.text as string) : getProtobufDefaultType(node.data.type as string);
         default: return "google.protobuf.Empty";
     }
 }
@@ -67,8 +66,8 @@ export function Protobuf({height}: {height?: string}) {
         }
     }));
 
-    const states = nodes.filter(node => node.type === 'StateNode').map(node => ({
-        name: String(node.data.text || node.id),
+    const states = nodes.filter(node => node.type === 'StateObjectNode').map(node => ({
+        name: String(node.data.type || node.id),
         fields: edges.filter(edge => edge.target === node.id).map(edge => nodes.find(node => node.id === edge.source)).map((node, id) => ({
             name: String(node?.data.text || node?.id),
             type: String(node?.data.type).toLowerCase(),

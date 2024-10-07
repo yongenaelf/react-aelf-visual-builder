@@ -4,7 +4,7 @@ import { Position, NodeProps, Handle, useReactFlow, Node } from "@xyflow/react";
 function StateTypeNode({
   id,
   data,
-}: NodeProps<Node<{ text: string; type: string; label?: string }>>) {
+}: NodeProps<Node<{ text: string; type: string; }>>) {
   const { updateNodeData } = useReactFlow();
 
   return (
@@ -35,6 +35,7 @@ function StateTypeNode({
         </select>
       </div>
       <Handle type="source" position={Position.Left} />
+      <Handle type="target" position={Position.Right} />
     </div>
   );
 }
