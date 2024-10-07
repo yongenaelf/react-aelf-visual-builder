@@ -32,6 +32,7 @@ function StateTypeNode({
           <option>string</option>
           <option>int64</option>
           <option>boolean</option>
+          <option>repeated</option>
         </select>
       </div>
       <Handle type="source" position={Position.Left} />
