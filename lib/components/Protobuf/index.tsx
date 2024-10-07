@@ -58,9 +58,11 @@ export function Protobuf({height}: {height?: string}) {
 
     const events = nodes.filter(node => node.type === 'EventNode').map(node => ({
         name: String(node.data.text || node.id),
-        fields: [
-            { name: "value", type: "string", id: 1 }
-        ],
+        fields: edges.filter(edge => edge.target === node.id).map(edge => nodes.find(node => node.id === edge.source)).map((node, id) => ({
+            name: String(node?.data.text || node?.id),
+            type: String(node?.data.type),
+            id: id + 1
+        })),
         options: {
             "aelf.is_event": "true",
         }
