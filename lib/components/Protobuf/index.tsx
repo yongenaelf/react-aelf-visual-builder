@@ -43,8 +43,8 @@ export function Protobuf({height}: {height?: string}) {
 
     const viewMethods = nodes.filter(node => node.type === 'ViewFunctionNode').map(node => ({
         name: String(node.data.text || node.id),
-        inputType: "google.protobuf.Empty",
-        outputType: getProtobufType(nodes.find(node => edges.find(edge => edge.source === node.id)?.target)),
+        inputType: getProtobufType(nodes.find(node => edges.find(edge => edge.source === node.id && edge.targetHandle === 'input')?.target)),
+        outputType: getProtobufType(nodes.find(node => edges.find(edge => edge.source === node.id && edge.targetHandle === 'output')?.target)),
         options: [
             { key: "aelf.is_view", value: "true" }
         ]

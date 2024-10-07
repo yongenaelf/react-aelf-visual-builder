@@ -25,7 +25,8 @@ function ViewFunctionNode({
           style={{ display: "block" }}
         />
       </div>
-      <Handle type="target" position={Position.Right} />
+      <Handle type="target" id="input" position={Position.Left} />
+      <Handle type="target" id="output" position={Position.Right} />
     </div>
   );
 }
